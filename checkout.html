@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - ShopMahal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assests/SM_logo_BGR_.webp">
+  <style>
+    /* [Existing CSS remains unchanged] */
+    .checkout-container {
+      max-width: 850px;
+      margin: 20px auto;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e6e9f0 100%);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .checkout-header h2 {
+      text-align: center;
+      color: #000000;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .checkout-section {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+    .checkout-section h3 {
+      margin-bottom: 20px;
+    }
+    .checkout-section:hover {
+      transform: translateY(-5px);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #333;
+    }
+    .delivery-date-options {
+      display: flex;
+      gap: 15px;
+    }
+    .date-option {
+      cursor: pointer;
+      padding: 12px 20px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .date-option:hover, .date-option.selected {
+      background: #6c5ce7;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .address-form {
+      display: none;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    .address-form.active {
+      display: block;
+    }
+    .saved-addresses {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .saved-addresses select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23333"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+      appearance: none;
+      transition: border-color 0.3s ease;
+    }
+    .saved-addresses select:focus {
+      border-color: #6c5ce7;
+      outline: none;
+    }
+    .edit-address-btn {
+      padding: 8px 15px;
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 10px;
+      transition: background 0.3s ease;
+    }
+    .edit-address-btn:hover {
+      background: #5a4bcb;
+    }
+    .save-address-btn {
+      padding: 10px 20px;
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+      display: none;
+    }
+    .save-address-btn:hover {
+      background: #5a4bcb;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #6c5ce7;
+      outline: none;
+    }
+    .payment-section {
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffffff 70%, #f8f9fa 100%);
+      position: relative;
+    }
+    .payment-section h3 {
+      background: #007bff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px 5px 0 0;
+      margin: -20px -20px 20px -20px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .payment-option:hover {
+      background: #f1f3f5;
+      transform: translateX(10px);
+    }
+    .payment-option.selected {
+      background: #007bff;
+      color: #fff;
+      font-weight: 600;
+    }
+    .payment-option .icon {
+      color: #6c5ce7;
+      font-size: 20px;
+      margin-right: 15px;
+    }
+    .sub-option {
+      margin-left: 40px;
+      color: #666;
+      font-size: 14px;
+      padding: 8px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .sub-option.selected {
+      color: #007bff;
+      font-weight: 500;
+    }
+    .card-inputs {
+      display: none;
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+    .card-inputs.active {
+      display: block;
+    }
+    .card-inputs .form-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .card-inputs .form-group input[type="text"] {
+      width: 100%;
+    }
+    .card-inputs .form-group input[name="cvv"] {
+      width: 80px;
+    }
+    .upi-input {
+      display: none;
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+    .upi-input.active {
+      display: block;
+    }
+    .qr-container {
+      display: none;
+      margin-left: 40px;
+      margin-top: 0px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .qr-container.active {
+      display: block;
+    }
+    .qr-container img {
+      max-width: 200px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .note {
+      color: #888;
+      font-size: 12px;
+      margin-left: 40px;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+    .note.selected {
+      color: #ddd;
+    }
+    button {
+      padding: 15px 40px;
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      display: block;
+      margin-top: 25px;
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    }
+    button:hover {
+      background: #5a4bcb;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-content h3 {
+      color: #d9534f;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .modal-content p {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .modal-content button {
+      padding: 10px 20px;
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .modal-content button:hover {
+      background: #5a4bcb;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="assests/SM_logo_BGR_.webp" alt="ShopMahal Logo" width="100px" height="100px">
+        </div>
+        <div class="logotxt">
+          <p>𝕊𝕙𝕠𝕡𝕄𝕒𝕙𝕒𝕝</p>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="checkout-container">
+        <div class="checkout-header">
+          <h2>Checkout</h2>
+        </div>
+        <form id="checkout-form">
+          <!-- Delivery Date Section -->
+          <div class="checkout-section">
+            <h3>Select Delivery Date</h3>
+            <div class="form-group delivery-date-options" id="delivery-date-options"></div>
+          </div>
+
+          <!-- Delivery Address Section -->
+          <div class="checkout-section">
+            <h3>Delivery Address</h3>
+            <div class="saved-addresses">
+              <select id="saved-address-select" onchange="loadSavedAddress()">
+                <option value="">Select Saved Address</option>
+              </select>
+              <button type="button" id="edit-address-btn" class="edit-address-btn">Edit</button>
+            </div>
+            <button type="button" id="add-address-btn">Add Address</button>
+            <button type="button" class="save-address-btn" id="save-address-btn" style="display: none;">Save Address</button>
+            <div id="address-form" class="address-form">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" required>
+              </div>
+              <div class="form-group">
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);" required>
+              </div>
+              <div class="form-group">
+                <label for="house">House No./Building Name *:</label>
+                <input type="text" id="house" name="house" required>
+              </div>
+              <div class="form-group">
+                <label for="road">Road Name/Area/Street/Colony *:</label>
+                <input type="text" id="road" name="road" required>
+              </div>
+              <div class="form-group">
+                <label for="landmark">Landmark (Optional):</label>
+                <input type="text" id="landmark" name="landmark">
+              </div>
+              <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Mode Section -->
+          <div class="checkout-section">
+            <h3>PAYMENT OPTIONS</h3>
+            <div class="payment-section">
+              <div class="payment-option" data-payment="upi">
+                <span class="icon">💸</span> UPI
+              </div>
+              <div class="sub-option" data-payment="upi-id">Your UPI ID</div>
+              <div class="upi-input" id="upi-input">
+                <input type="text" id="upi-id-input" placeholder="Enter your UPI ID" name="upi-id">
+              </div>
+              <div class="sub-option" data-payment="upi-app">Pay by any UPI app</div>
+              <div class="payment-option" data-payment="card">
+                Credit / Debit / ATM Card
+              </div>
+              <div class="card-inputs" id="card-inputs">
+                <div class="form-group">
+                  <label for="card-number">Enter card number</label>
+                  <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\d{4})/g, '$1 ').trim();">
+                </div>
+                <div class="form-group">
+                  <label for="valid-thru">Valid Thru</label>
+                  <input type="text" id="valid-thru" name="valid-thru" placeholder="MM/YY" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\d{2})(\d{0,2})/, '$1/$2').slice(0, 5);">
+                  <label for="cvv" style="margin-left: 20px;">CVV</label>
+                  <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);">
+                </div>
+              </div>
+              <div class="sub-option">Add and secure cards as per RBI guidelines</div>
+              <div class="payment-option" data-payment="qr">
+                <span class="icon">📲</span> QR Payment
+              </div>
+              <div class="sub-option" data-payment="qr-show">Show QR Code</div>
+              <div class="qr-container" id="qr-container">
+                <img src="assests/Ashraf_QRCode.webp" alt="QR Code for Payment">
+              </div>
+              <div class="payment-option" data-payment="net-banking">
+                Net Banking
+              </div>
+              <div class="note">This instrument has low success, use UPI or cards for better experience</div>
+              <div class="payment-option" data-payment="emi">
+                EMI (Easy Installments)
+              </div>
+              <div class="payment-option" data-payment="cod">
+                Cash on Delivery
+              </div>
+            </div>
+            <button type="submit">Next</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 ShopMahal</p>
+    </footer>
+
+    <!-- Custom Alert Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3>Error</h3>
+        <p id="modal-message"></p>
+        <button id="modal-ok-button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/cart.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update cart count on page load
+      updateCartCount();
+
+      // Generate delivery dates (5 days from today) with error handling
+      const today = new Date();
+      const dateOptions = document.getElementById('delivery-date-options');
+      if (!dateOptions) {
+        console.error('Delivery date options container not found!');
+        return;
+      }
+      try {
+        for (let i = 0; i < 3; i++) {
+          const date = new Date(today);
+          date.setDate(today.getDate() + 5 + i);
+          const option = document.createElement('div');
+          option.className = 'date-option';
+          option.textContent = `${date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })} ${date.toLocaleDateString('en-US', { weekday: 'long' })}`;
+          option.dataset.value = date.toISOString().split('T')[0];
+          option.addEventListener('click', function() {
+            document.querySelectorAll('.date-option').forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+          });
+          dateOptions.appendChild(option);
+        }
+        console.log('Delivery dates generated successfully');
+      } catch (error) {
+        console.error('Error generating delivery dates:', error);
+      }
+
+      // Load saved addresses
+      const savedAddresses = JSON.parse(localStorage.getItem('savedAddresses') || '[]');
+      const savedAddressSelect = document.getElementById('saved-address-select');
+      const editAddressBtn = document.getElementById('edit-address-btn');
+      const addressForm = document.getElementById('address-form');
+      const saveAddressBtn = document.getElementById('save-address-btn');
+      let isEditingAddress = false;
+      let editingAddressIndex = null;
+      let currentUser = localStorage.getItem('currentUser') || 'guest';
+
+      function getUserKey(key) {
+        return `${key}_${currentUser}`;
+      }
+
+      function populateSavedAddresses() {
+        savedAddressSelect.innerHTML = '<option value="">Select Saved Address</option>';
+        savedAddresses.forEach((addr, index) => {
+          const option = document.createElement('option');
+          option.value = index;
+          option.textContent = `${addr.name}, ${addr.house}, ${addr.city}`;
+          savedAddressSelect.appendChild(option);
+        });
+        updateEditButtonVisibility();
+      }
+      populateSavedAddresses();
+
+      // Pre-populate form from review.html
+      const referrer = document.referrer;
+      const checkoutData = JSON.parse(localStorage.getItem(getUserKey('checkoutData')) || '{}');
+      console.log('Checkout Data on Load:', checkoutData);
+
+      if (referrer.includes('review.html') && Object.keys(checkoutData).length > 0) {
+        setTimeout(() => restoreCheckoutData(checkoutData), 0); // Ensure DOM is ready
+      }
+
+      function restoreCheckoutData(data) {
+        console.log('Restoring checkout data:', data);
+        const { deliveryDate, deliveryAddress, paymentMode, upiId, cardNumber, validThru, cvv } = data;
+
+        // Restore delivery date
+        if (deliveryDate) {
+          const dateOption = document.querySelector(`.date-option[data-value="${deliveryDate}"]`);
+          if (dateOption) {
+            dateOption.classList.add('selected');
+            console.log('Restored delivery date:', deliveryDate);
+          }
+        }
+
+        // Restore address
+        if (deliveryAddress) {
+          let savedIndex = -1;
+          for (let i = 0; i < savedAddresses.length; i++) {
+            const savedAddr = savedAddresses[i];
+            const savedAddrString = `${savedAddr.name}, ${savedAddr.house}, ${savedAddr.road}, ${savedAddr.landmark || ''}, ${savedAddr.city}, ${savedAddr.state}, ${savedAddr.pincode}, ${savedAddr.phone}`.replace(/\s+/g, ' ').trim();
+            const deliveryAddrString = deliveryAddress.replace(/\s+/g, ' ').trim();
+            if (savedAddrString === deliveryAddrString) {
+              savedIndex = i;
+              break;
+            }
+          }
+          if (savedIndex >= 0) {
+            savedAddressSelect.value = savedIndex;
+            loadSavedAddress();
+            console.log('Restored saved address index:', savedIndex);
+          } else {
+            const parts = deliveryAddress.split(', ').filter(Boolean);
+            if (parts.length >= 7) {
+              const [name, house, road, landmark, city, state, pincodePhone] = parts;
+              const [pincode, phone] = pincodePhone.match(/(\d{6})\s*(\d{10})/)?.slice(1) || ['', ''];
+              document.getElementById('name').value = name || '';
+              document.getElementById('phone').value = phone || '';
+              document.getElementById('pincode').value = pincode || '';
+              document.getElementById('house').value = house || '';
+              document.getElementById('road').value = road || '';
+              document.getElementById('landmark').value = landmark === 'undefined' ? '' : landmark;
+              document.getElementById('city').value = city || '';
+              document.getElementById('state').value = state || '';
+              addressForm.classList.add('active');
+              saveAddressBtn.style.display = 'inline-block';
+              saveAddressBtn.textContent = 'Save Address';
+              isEditingAddress = false;
+              console.log('Restored non-saved address:', { name, house, road, landmark, city, state, pincode, phone });
+            }
+          }
+        }
+
+        // Restore payment mode
+        if (paymentMode) {
+          console.log('Attempting to restore payment mode:', paymentMode);
+          selectedPayment = paymentMode;
+          updatePaymentUI(paymentMode, upiId, cardNumber, validThru, cvv);
+          console.log('Restored payment mode to:', selectedPayment);
+        }
+      }
+
+      // Updated payment UI update function
+      function updatePaymentUI(mode, upiId, cardNumber, validThru, cvv) {
+        console.log('Updating payment UI for mode:', mode);
+        const paymentOptions = document.querySelectorAll('.payment-option, .sub-option');
+        const upiInput = document.getElementById('upi-input');
+        const cardInputs = document.getElementById('card-inputs');
+        const qrContainer = document.getElementById('qr-container');
+
+        paymentOptions.forEach(opt => {
+          opt.classList.remove('selected');
+          if (opt.nextElementSibling && opt.nextElementSibling.classList.contains('note')) {
+            opt.nextElementSibling.classList.remove('selected');
+          }
+        });
+        upiInput.classList.remove('active');
+        cardInputs.classList.remove('active');
+        qrContainer.classList.remove('active');
+
+        let selectedElement = document.querySelector(`[data-payment="${mode}"]`);
+        if (!selectedElement) {
+          if (mode === 'upi-id' || mode === 'upi-app') {
+            selectedElement = document.querySelector('[data-payment="upi"]');
+          } else if (mode === 'qr-show') {
+            selectedElement = document.querySelector('[data-payment="qr"]');
+          }
+        }
+
+        if (selectedElement) {
+          selectedElement.classList.add('selected');
+          if (selectedElement.nextElementSibling && selectedElement.nextElementSibling.classList.contains('note')) {
+            selectedElement.nextElementSibling.classList.add('selected');
+          }
+        }
+
+        if (mode === 'upi-id') {
+          upiInput.classList.add('active');
+          document.getElementById('upi-id-input').value = upiId || '';
+          document.querySelector('[data-payment="upi"]').classList.add('selected');
+        } else if (mode === 'upi-app') {
+          document.querySelector('[data-payment="upi"]').classList.add('selected');
+        } else if (mode === 'card') {
+          cardInputs.classList.add('active');
+          document.getElementById('card-number').value = cardNumber || '';
+          document.getElementById('valid-thru').value = validThru || '';
+          document.getElementById('cvv').value = cvv || '';
+        } else if (mode === 'qr-show') {
+          qrContainer.classList.add('active');
+          document.querySelector('[data-payment="qr"]').classList.add('selected');
+        }
+
+        selectedPayment = mode;
+        console.log('Payment UI updated, selectedPayment:', selectedPayment);
+      }
+
+      // Toggle address form
+      const addAddressBtn = document.getElementById('add-address-btn');
+      addAddressBtn.addEventListener('click', () => {
+        addressForm.classList.add('active');
+        saveAddressBtn.style.display = 'inline-block';
+        saveAddressBtn.textContent = 'Save Address';
+        isEditingAddress = false;
+        resetAddressForm();
+      });
+
+      // Load saved address
+      function loadSavedAddress() {
+        const index = savedAddressSelect.value;
+        if (index !== '') {
+          const addr = savedAddresses[index];
+          document.getElementById('name').value = addr.name || '';
+          document.getElementById('phone').value = addr.phone || '';
+          document.getElementById('pincode').value = addr.pincode || '';
+          document.getElementById('house').value = addr.house || '';
+          document.getElementById('road').value = addr.road || '';
+          document.getElementById('landmark').value = addr.landmark || '';
+          document.getElementById('city').value = addr.city || '';
+          document.getElementById('state').value = addr.state || '';
+          addressForm.classList.remove('active');
+          saveAddressBtn.style.display = 'none';
+        } else {
+          resetAddressForm();
+        }
+        updateEditButtonVisibility();
+      }
+
+      // Edit saved address
+      editAddressBtn.addEventListener('click', () => {
+        const index = savedAddressSelect.value;
+        console.log('Edit button clicked, selected index:', index);
+        if (index !== '' && index >= 0 && index < savedAddresses.length) {
+          isEditingAddress = true;
+          editingAddressIndex = parseInt(index);
+          const addr = savedAddresses[index];
+          console.log('Populating form with address:', addr);
+          document.getElementById('name').value = addr.name || '';
+          document.getElementById('phone').value = addr.phone || '';
+          document.getElementById('pincode').value = addr.pincode || '';
+          document.getElementById('house').value = addr.house || '';
+          document.getElementById('road').value = addr.road || '';
+          document.getElementById('landmark').value = addr.landmark || '';
+          document.getElementById('city').value = addr.city || '';
+          document.getElementById('state').value = addr.state || '';
+          addressForm.classList.add('active');
+          saveAddressBtn.style.display = 'inline-block';
+          saveAddressBtn.textContent = 'Update Address';
+          console.log('Address form populated and activated');
+        } else {
+          console.log('Invalid address index selected:', index);
+          showModal('Please select a valid saved address to edit.');
+        }
+      });
+
+      // Save or update address
+      saveAddressBtn.addEventListener('click', () => {
+        const address = {
+          name: document.getElementById('name').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          pincode: document.getElementById('pincode').value.trim(),
+          house: document.getElementById('house').value.trim(),
+          road: document.getElementById('road').value.trim(),
+          landmark: document.getElementById('landmark').value.trim(),
+          city: document.getElementById('city').value.trim(),
+          state: document.getElementById('state').value.trim()
+        };
+        console.log('Saving address:', address);
+
+        if (validateAddress(address)) {
+          if (isEditingAddress) {
+            savedAddresses[editingAddressIndex] = { ...address };
+            localStorage.setItem('savedAddresses', JSON.stringify(savedAddresses));
+            showModal('Address updated successfully!');
+          } else {
+            savedAddresses.push(address);
+            localStorage.setItem('savedAddresses', JSON.stringify(savedAddresses));
+            showModal('Address saved successfully!');
+          }
+          populateSavedAddresses(); // Ensure dropdown updates with new address
+          addressForm.classList.remove('active');
+          saveAddressBtn.style.display = 'none';
+          resetAddressForm();
+          savedAddressSelect.value = isEditingAddress ? editingAddressIndex : savedAddresses.length - 1;
+          loadSavedAddress();
+          isEditingAddress = false;
+          editingAddressIndex = null;
+        }
+      });
+
+      function validateAddress(address) {
+        if (!address.name || !address.phone || !address.pincode || !address.house || !address.road || !address.city || !address.state) {
+          showModal('Please fill all required address fields.');
+          return false;
+        }
+        if (address.phone.length !== 10 || address.pincode.length !== 6) {
+          showModal('Phone number must be 10 digits and Pincode must be 6 digits.');
+          return false;
+        }
+        return true;
+      }
+
+      function resetAddressForm() {
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('pincode').value = '';
+        document.getElementById('house').value = '';
+        document.getElementById('road').value = '';
+        document.getElementById('landmark').value = '';
+        document.getElementById('city').value = '';
+        document.getElementById('state').value = '';
+      }
+
+      // Payment selection
+      let selectedPayment = null;
+      const paymentOptions = document.querySelectorAll('.payment-option, .sub-option');
+
+      function selectPayment(value) {
+        console.log('Selecting payment mode:', value);
+        updatePaymentUI(value);
+      }
+
+      paymentOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+          const value = option.getAttribute('data-payment');
+          if (value) {
+            selectPayment(value);
+          }
+          e.stopPropagation();
+        });
+      });
+
+      // Updated payment UI update function
+      function updatePaymentUI(mode) {
+        console.log('Updating payment UI for mode:', mode);
+        const paymentOptions = document.querySelectorAll('.payment-option, .sub-option');
+        const upiInput = document.getElementById('upi-input');
+        const cardInputs = document.getElementById('card-inputs');
+        const qrContainer = document.getElementById('qr-container');
+
+        paymentOptions.forEach(opt => {
+          opt.classList.remove('selected');
+          if (opt.nextElementSibling && opt.nextElementSibling.classList.contains('note')) {
+            opt.nextElementSibling.classList.remove('selected');
+          }
+        });
+        upiInput.classList.remove('active');
+        cardInputs.classList.remove('active');
+        qrContainer.classList.remove('active');
+
+        let selectedElement = document.querySelector(`[data-payment="${mode}"]`);
+        if (!selectedElement) {
+          if (mode === 'upi-id' || mode === 'upi-app') {
+            selectedElement = document.querySelector('[data-payment="upi"]');
+          } else if (mode === 'qr-show') {
+            selectedElement = document.querySelector('[data-payment="qr"]');
+          }
+        }
+
+        if (selectedElement) {
+          selectedElement.classList.add('selected');
+          if (selectedElement.nextElementSibling && selectedElement.nextElementSibling.classList.contains('note')) {
+            selectedElement.nextElementSibling.classList.add('selected');
+          }
+        }
+
+        if (mode === 'upi-id') {
+          upiInput.classList.add('active');
+          document.querySelector('[data-payment="upi"]').classList.add('selected');
+        } else if (mode === 'upi-app') {
+          document.querySelector('[data-payment="upi"]').classList.add('selected');
+        } else if (mode === 'card') {
+          cardInputs.classList.add('active');
+        } else if (mode === 'qr-show') {
+          qrContainer.classList.add('active');
+          document.querySelector('[data-payment="qr"]').classList.add('selected');
+        }
+
+        selectedPayment = mode;
+        console.log('Payment UI updated, selectedPayment:', selectedPayment);
+      }
+
+      // Modal functions
+      const modal = document.getElementById('modal');
+      const modalMessage = document.getElementById('modal-message');
+      const modalOkButton = document.getElementById('modal-ok-button');
+
+      function showModal(message) {
+        modalMessage.textContent = message;
+        modal.style.display = 'flex';
+      }
+
+      function closeModal() {
+        modal.style.display = 'none';
+      }
+
+      modalOkButton.addEventListener('click', closeModal);
+
+      // Form submission
+      document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const selectedDate = document.querySelector('.date-option.selected');
+        const deliveryDate = selectedDate ? selectedDate.dataset.value : '';
+        const savedIndex = savedAddressSelect.value;
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        const house = document.getElementById('house').value.trim();
+        const road = document.getElementById('road').value.trim();
+        const landmark = document.getElementById('landmark').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const upiId = document.getElementById('upi-id-input').value.trim() || null;
+        const cardNumber = document.getElementById('card-number').value.trim() || null;
+        const validThru = document.getElementById('valid-thru').value.trim() || null;
+        const cvv = document.getElementById('cvv').value.trim() || null;
+
+        let hasAddress = false;
+        let deliveryAddress = '';
+        if (savedIndex !== '' && savedAddresses[savedIndex]) {
+          hasAddress = true;
+          const addr = savedAddresses[savedIndex];
+          deliveryAddress = `${addr.name}, ${addr.house}, ${addr.road}, ${addr.landmark || ''}, ${addr.city}, ${addr.state}, ${addr.pincode}, ${addr.phone}`;
+          console.log('Using saved address:', deliveryAddress);
+        } else if (name && phone && pincode && house && road && city && state) {
+          hasAddress = true;
+          deliveryAddress = `${name}, ${house}, ${road}, ${landmark || ''}, ${city}, ${state}, ${pincode}, ${phone}`;
+          console.log('Using new address:', deliveryAddress);
+        }
+
+        let isValid = true;
+        if (!deliveryDate) {
+          showModal('Please select a Delivery Date.');
+          isValid = false;
+        } else if (!hasAddress) {
+          showModal('Please select or add a Delivery Address.');
+          isValid = false;
+        } else if (savedIndex === '' && (phone.length !== 10 || pincode.length !== 6)) {
+          showModal('Phone number must be 10 digits and Pincode must be 6 digits.');
+          isValid = false;
+        } else if (!selectedPayment) {
+          showModal('Please select a Payment Mode.');
+          isValid = false;
+        } else if (selectedPayment === 'card' && (!cardNumber || !validThru || !cvv)) {
+          showModal('Please fill in all card details (Card Number, Valid Thru, CVV).');
+          isValid = false;
+        } else if (selectedPayment === 'upi-id' && !upiId) {
+          showModal('Please enter your UPI ID.');
+          isValid = false;
+        }
+
+        if (isValid) {
+          const checkoutData = {
+            deliveryDate,
+            deliveryAddress,
+            paymentMode: selectedPayment,
+            upiId: selectedPayment === 'upi-id' ? upiId : null,
+            cardNumber: selectedPayment === 'card' ? cardNumber : null,
+            validThru: selectedPayment === 'card' ? validThru : null,
+            cvv: selectedPayment === 'card' ? cvv : null
+          };
+          const checkoutCart = JSON.parse(localStorage.getItem(getUserKey('checkoutCart')) || '[]');
+          localStorage.setItem(getUserKey('checkoutData'), JSON.stringify(checkoutData));
+          console.log('Submitting checkout data:', checkoutData);
+          console.log('Submitting checkout cart:', checkoutCart);
+          window.location.href = 'review.html';
+        }
+      });
+
+      function updateEditButtonVisibility() {
+        editAddressBtn.style.display = savedAddressSelect.value !== '' ? 'inline-block' : 'none';
+      }
+
+      savedAddressSelect.addEventListener('change', () => {
+        loadSavedAddress();
+        updateEditButtonVisibility();
+      });
+    });
+  </script>
+</body>
+</html>

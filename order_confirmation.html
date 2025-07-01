@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation - ShopMahal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assests/SM_logo_BGR_.webp">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f47575, #e6f7fa);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .page-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .confirmation-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    .tick-animation {
+      font-size: 80px;
+      color: #28a745;
+      animation: shake 1s infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-10px); }
+      75% { transform: translateY(10px); }
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 28px;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    h3 {
+      color: #2c3e50;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .order-details {
+      margin: 30px 0;
+      padding: 20px;
+      background: #ffcccc;
+      border-radius: 15px;
+      text-align: left;
+      color: #2c3e50;
+    }
+    .detail-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    .detail-item i {
+      color: #e91e63;
+      margin-right: 15px;
+      font-size: 20px;
+    }
+    .detail-item span.label {
+      font-weight: 500;
+      width: 150px;
+    }
+    .detail-item span.value {
+      flex: 1;
+    }
+    .feedback-form {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 15px;
+      text-align: left;
+    }
+    .feedback-form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #2c3e50;
+    }
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .feedback-form button {
+      padding: 12px 35px;
+      background: #ff6666;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 250px;
+    }
+    .feedback-form button:hover {
+      transform: scale(1.05);
+    }
+    button {
+      padding: 12px 35px;
+      background: #ff6666;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 250px;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    /* Inline Message Styles (Matching Contact Us Page) */
+    .success-message, .error-message {
+      color: #4CAF50;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      display: none;
+      text-align: center;
+    }
+    .error-message {
+      color: #ff4444;
+    }
+    @media (max-width: 600px) {
+      .confirmation-container {
+        margin: 20px;
+        padding: 20px;
+      }
+      .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+      .detail-item span.label {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="assests/SM_logo_BGR_.webp" alt="ShopMahal Logo" width="100px" height="100px">
+        </div>
+        <div class="logotxt">
+          <p>𝕊𝕙𝕠𝕡𝕄𝕒𝕙𝕒𝕝</p>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="confirmation-container">
+        <div class="tick-animation">✔</div>
+        <h1>Thank You, Your Order is Successfully Placed!</h1>
+        <div class="order-details" id="order-details"></div>
+        <div class="feedback-form">
+          <h3>Leave Feedback</h3>
+          <form id="feedback-form">
+            <input type="email" name="email" placeholder="Your email" required>
+            <textarea name="message" placeholder="Your feedback" required></textarea>
+            <button type="submit">Submit Feedback</button>
+            <p id="feedback-message" class="success-message"></p>
+          </form>
+        </div>
+        <button onclick="continueShopping()">Continue Shopping</button>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 ShopMahal</p>
+    </footer>
+  </div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    console.log('Script loaded');
+
+    // Initialize EmailJS with your User ID
+    (function() {
+      try {
+        emailjs.init('3QjGuPThByNX13xNF'); // Your User ID
+        console.log('EmailJS initialized');
+      } catch (e) {
+        console.error('EmailJS initialization failed:', e);
+      }
+    })();
+
+    // Handle form submission with EmailJS
+    const feedbackForm = document.getElementById('feedback-form');
+    if (feedbackForm) {
+      console.log('Feedback form found');
+      feedbackForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        console.log('Form submitted');
+
+        // Get form data
+        const formData = new FormData(feedbackForm);
+        const email = formData.get('email');
+        const message = formData.get('message');
+        const time = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata", year: "numeric", month: "long", day: "numeric", hour: "numeric",
+        minute: "numeric",hour12: true }) + " IST"; // Current time in IST
+        console.log('Form data:', { email, message, time });
+
+        // Additional debug log to confirm the parameters being sent
+        const emailParams = { email: email, message: message, time: time };
+        console.log('Parameters being sent to EmailJS:', emailParams);
+
+        const feedbackMessage = document.getElementById('feedback-message');
+        if (!email || !message) {
+          console.error('Invalid form data:', { email, message });
+          feedbackMessage.textContent = 'Please fill in all fields.';
+          feedbackMessage.className = 'error-message';
+          feedbackMessage.style.display = 'block';
+          return;
+        }
+
+        // Show immediate submitting message
+        feedbackMessage.textContent = 'Submitting...';
+        feedbackMessage.className = 'success-message';
+        feedbackMessage.style.display = 'block';
+
+        // Send email using EmailJS
+        emailjs.send('service_9w5soef', 'template_8xrp3rp', emailParams)
+        .then((response) => {
+          console.log('Email sent successfully:', response.status, response.text);
+          feedbackMessage.textContent = 'Feedback submitted successfully! Check your email for confirmation.';
+          feedbackMessage.className = 'success-message';
+          feedbackMessage.style.display = 'block';
+          // Redirect to thankyou.html after success
+          setTimeout(() => {
+            console.log('Redirecting to thankyou.html');
+            window.location.href = 'thankyou.html';
+          }, 2000); // Redirect after 2 seconds to allow the user to read the message
+        })
+        .catch((error) => {
+          console.error('Error sending email:', error);
+          console.error('Error details:', error.text || error);
+          feedbackMessage.textContent = 'Failed to send feedback. Please try again or contact support.';
+          feedbackMessage.className = 'error-message';
+          feedbackMessage.style.display = 'block';
+        });
+      });
+    } else {
+      console.error('Feedback form not found');
+    }
+
+    // Simplified DOMContentLoaded for order details
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded event fired');
+      let currentUser = localStorage.getItem('currentUser') || 'guest';
+      const orderDetails = document.getElementById('order-details');
+
+      function getUserKey(key) {
+        return `${key}_${currentUser}`;
+      }
+
+      // Load checkout data
+      const checkoutData = JSON.parse(localStorage.getItem(getUserKey('checkoutData')) || '{}');
+
+      // Display order details
+      if (orderDetails) {
+        orderDetails.innerHTML = `
+          <div class="detail-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="label">Estimated Delivery:</span>
+            <span class="value">${checkoutData.deliveryDate || 'Not specified'}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span class="label">Delivery Address:</span>
+            <span class="value">${checkoutData.deliveryAddress || 'Not specified'}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-credit-card"></i>
+            <span class="label">Payment Method:</span>
+            <span class="value">${checkoutData.paymentMode || 'Not specified'}</span>
+          </div>
+          ${checkoutData.paymentMode === 'upi-id' && checkoutData.upiId ? `
+            <div class="detail-item">
+              <i class="fas fa-mobile-alt"></i>
+              <span class="label">UPI ID:</span>
+              <span class="value">${checkoutData.upiId}</span>
+            </div>` : ''}
+          ${checkoutData.paymentMode === 'card' && checkoutData.cardNumber ? `
+            <div class="detail-item">
+              <i class="fas fa-credit-card"></i>
+              <span class="label">Card Number:</span>
+              <span class="value">${checkoutData.cardNumber.replace(/(\d{4})/g, '$1 ').trim()}</span>
+            </div>` : ''}
+        `;
+      }
+
+      // Clear checkout data
+      localStorage.removeItem(`checkoutCart_${currentUser}`);
+      localStorage.removeItem(`checkoutData_${currentUser}`);
+      localStorage.removeItem(`cart_${currentUser}`);
+
+      // Confetti animation
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 150,
+          spread: 100,
+          origin: { y: 0.6 }
+        });
+      } else {
+        console.log('Confetti library not loaded');
+      }
+    });
+
+    window.continueShopping = function() {
+      window.location.href = 'index.html';
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopMahal - Dress</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assests/SM_logo_BGR_.webp">
+</head>
+<body data-category="dress">
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="assests/SM_logo_BGR_.webp" alt="ShopMahal Logo" width="100px" height="100px">
+        </div>
+        <div class="logotxt">
+          <p>𝕊𝕙𝕠𝕡𝕄𝕒𝕙𝕒𝕝</p>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li class="dropdown">
+              <a href="products.html" class="dropbtn active">Products</a>
+              <ul class="dropdown-content">
+                <li><a href="electronics.html">Electronics</a></li>
+                <li><a href="homegadgets.html">Home Gadgets</a></li>
+                <li><a href="dress.html">Dress</a></li>
+                <li><a href="women_wear.html">Women Wear</a></li>
+                <li><a href="men_wear.html">Men Wear</a></li>
+                <li><a href="kids_wear.html">Kids Wear</a></li>
+                <li><a href="suits.html">Suits</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="footwear.htm">Footwear</a></li>
+                <li><a href="kids.html">Kids Toys</a></li>
+                <li><a href="beauty.html">Beauty</a></li>
+                <li><a href="jewellery.html">Jewelry</a></li>
+                <li><a href="sports_fitness.html">Sports & Fitness</a></li>
+                <li><a href="books_stationary.html">Books & Stationery</a></li>
+                <li><a href="toys_games.html">Toys & Games</a></li>
+                <li><a href="health_personalcare.html">Health & Personal Care</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="signin.html" id="logout">Logout</a></li>
+          </ul>
+        </nav>
+        <div class="search-container">
+          <input type="text" id="search-bar" placeholder="Search products by name..." />
+          <span class="search-icon">🔍</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <h2>Dress Products</h2>
+      <div id="product-list" class="product-grid"></div>
+    </main>
+
+    <footer>
+      <p>© @2025 ShopMahal</p>
+    </footer>
+  </div>
+  <div id="cart-notification" style="display: none;"></div>
+  <script src="js/products_categories.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

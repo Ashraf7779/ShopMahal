@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Order - ShopMahal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assests/SM_logo_BGR_.webp">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .page-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .review-container {
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e6ed;
+    }
+    h2 {
+      text-align: center;
+      color: #5b2c6f;
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+    .review-item {
+      padding: 18px;
+      margin-bottom: 15px;
+      background: #fafafa;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      color: #333;
+    }
+    .review-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+    .review-item span.label {
+      font-weight: 500;
+      color: #6c757d;
+      margin-right: 10px;
+    }
+    .review-item span.value {
+      color: #333;
+    }
+    .review-item strong {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    button {
+      padding: 12px 35px;
+      background: linear-gradient(90deg, #5b2c6f, #7b4a9e);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.3s ease, transform 0.3s ease;
+      width: 100%;
+      max-width: 250px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #4a2359, #6a3f87);
+      transform: translateY(-3px);
+    }
+    button.edit-btn {
+      background: linear-gradient(90deg, #3498db, #2980b9);
+    }
+    button.edit-btn:hover {
+      background: linear-gradient(90deg, #2980b9, #1f618d);
+    }
+    @media (max-width: 600px) {
+      .review-container {
+        margin: 20px;
+        padding: 20px;
+      }
+      .review-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+      .button-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+      button {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="assests/SM_logo_BGR_.webp" alt="ShopMahal Logo" width="100px" height="100px">
+        </div>
+        <div class="logotxt">
+          <p>𝕊𝕙𝕠𝕡𝕄𝕒𝕙𝕒𝕝</p>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="review-container">
+        <h2>Review Your Order</h2>
+        <div id="review-details"></div>
+        <div class="button-group">
+          <button onclick="placeOrder()">Place Your Order</button>
+          <button class="edit-btn" onclick="editOrder()">Edit</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 ShopMahal</p>
+    </footer>
+  </div>
+
+  <script src="js/cart.js"></script>
+  <script src="js/home.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update cart count on page load
+      updateCartCount();
+
+      const reviewDetails = document.getElementById('review-details');
+      let currentUser = localStorage.getItem('currentUser') || 'guest';
+
+      function getUserKey(key) {
+        return `${key}_${currentUser}`;
+      }
+
+      // Load user-specific checkout data
+      const checkoutData = JSON.parse(localStorage.getItem(getUserKey('checkoutData')) || '{}');
+      const cart = JSON.parse(localStorage.getItem(getUserKey('checkoutCart')) || '[]');
+
+      let total = 0;
+      reviewDetails.innerHTML = '<h3>Order Details:</h3>';
+      if (cart.length === 0) {
+        reviewDetails.innerHTML += '<p>No items to review. Please add items to your cart.</p>';
+      } else {
+        cart.forEach(item => {
+          reviewDetails.innerHTML += `<div class="review-item"><span class="label">${item.name} x ${item.quantity}</span><span class="value">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span></div>`;
+          total += item.price * item.quantity;
+        });
+        reviewDetails.innerHTML += `
+          <div class="review-item"><span class="label">Delivery Date:</span><span class="value">${checkoutData.deliveryDate || 'Not specified'}</span></div>
+          <div class="review-item"><span class="label">Delivery Address:</span><span class="value">${checkoutData.deliveryAddress || 'Not specified'}</span></div>
+          <div class="review-item"><span class="label">Payment Mode:</span><span class="value">${checkoutData.paymentMode || 'Not specified'}</span></div>
+          ${checkoutData.paymentMode === 'upi-id' && checkoutData.upiId ? `<div class="review-item"><span class="label">UPI ID:</span><span class="value">${checkoutData.upiId}</span></div>` : ''}
+          ${checkoutData.paymentMode === 'card' && checkoutData.cardNumber ? `<div class="review-item"><span class="label">Card Number:</span><span class="value">${checkoutData.cardNumber.replace(/(\d{4})/g, '$1 ').trim()}</span></div>` : ''}
+          ${checkoutData.paymentMode === 'card' && checkoutData.validThru ? `<div class="review-item"><span class="label">Valid Thru:</span><span class="value">${checkoutData.validThru}</span></div>` : ''}
+          ${checkoutData.paymentMode === 'card' && checkoutData.cvv ? `<div class="review-item"><span class="label">CVV:</span><span class="value">${checkoutData.cvv}</span></div>` : ''}
+          <div class="review-item"><span class="label">Total:</span><strong>₹${total.toLocaleString('en-IN')}</strong></div>
+        `;
+      }
+
+      const placeOrderBtn = document.querySelector('button');
+      const editBtn = document.querySelector('.edit-btn');
+      placeOrderBtn.addEventListener('click', placeOrder);
+      editBtn.addEventListener('click', editOrder);
+    });
+
+    function placeOrder() {
+      window.location.href = 'order_confirmation.html';
+    }
+
+    function editOrder() {
+      // Redirect to checkout.html with existing checkoutData
+      window.location.href = 'checkout.html';
+    }
+  </script>
+</body>
+</html>

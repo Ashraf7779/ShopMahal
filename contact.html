@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - ShopMahal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assests/SM_logo_BGR_.webp">
+  <link rel="preload" href="//code.tidio.co/abc123xyz.js" as="script">
+  <script src="//code.tidio.co/fhz1ds7ylcpxamqvg5vllsakhis4ynq8.js"></script>
+  <style>
+    .need-help-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .need-help-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .need-help-btn:hover {
+      background-color: #45a049;
+    }
+    .help-options {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .help-options p {
+      margin: 0.75rem 0;
+      font-size: 1.2rem;
+    }
+    .help-options .contact-number {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    .help-options textarea {
+      width: 100%;
+      min-height: 120px;
+      margin-top: 1rem;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1.1rem;
+    }
+    .help-options input[type="email"] {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1.1rem;
+    }
+    .help-options button {
+      background-color: #7b35abdf;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+    .help-options button:hover {
+      background-color: #006d93;
+      transform: scale(1.05);
+    }
+    .success-message, .error-message {
+      color: #4CAF50;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      display: none;
+    }
+    .error-message {
+      color: #ff4444;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="assests/SM_logo_BGR_.webp" alt="ShopMahal Logo" width="100px" height="100px">
+        </div>
+
+        <div class="logotxt">
+          <p>𝕊𝕙𝕠𝕡𝕄𝕒𝕙𝕒𝕝</p>
+        </div>
+        
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li class="dropdown">
+              <a href="products.html" class="dropbtn">Products</a>
+              <ul class="dropdown-content">
+                <li><a href="electronics.html">Electronics</a></li>
+                <li><a href="homegadgets.html">Home Gadgets</a></li>
+                <li><a href="dress.html">Dress</a></li>
+                <li><a href="women_wear.html">Women Wear</a></li>
+                <li><a href="men_wear.html">Men Wear</a></li>
+                <li><a href="kids_wear.html">Kids Wear</a></li>
+                <li><a href="suits.html">Suits</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="footwear.htm">Footwear</a></li>
+                <li><a href="kids.html">Kids Toys</a></li>
+                <li><a href="beauty.html">Beauty</a></li>
+                <li><a href="jewellery.html">Jewelry</a></li>
+                <li><a href="sports_fitness.html">Sports & Fitness</a></li>
+                <li><a href="books_stationary.html">Books & Stationery</a></li>
+                <li><a href="toys_games.html">Toys & Games</a></li>
+                <li><a href="health_personalcare.html">Health & Personal Care</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="signin.html" id="logout">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h2>Contact Us</h2>
+      <div class="contact-container">
+        <div class="office-details">
+          <h3>Our Office</h3>
+          <p><strong>Address:</strong> 12-48 Check Post Center, Kanuru, Vijayawada, India</p>
+          <p><strong>Mobile:</strong> +91-6302767779</p>
+          <p><strong>Land Line:</strong> +91-9949398788</p>
+          <p><strong>Email:</strong><a href="mailto:ashrafsk724@gmail.com" title="mailto: ashrafsk724@gmail.com" style="text-decoration: none;"> shopmahal.online@gmail.com</a></p>
+        </div>
+        
+        <form id="contact-form" class="contact-form">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">Submit</button>
+          <p id="form-message" class="success-message"></p>
+        </form>
+      </div>
+
+      <br>
+      <div class="need-help-section">
+        <button class="need-help-btn" onclick="toggleHelpOptions()">Need More Help ☎</button>
+        <div class="help-options" id="helpOptions">
+          <p class="contact-number">Contact us through this number: +91 6302767779</p>
+          <p>Or write your issue below:</p>
+          <input type="email" id="issueEmail" placeholder="Your Email" required>
+          <textarea placeholder="Describe your issue" id="issueText" required></textarea>
+          <button onclick="submitIssue()">Submit Issue</button>
+          <p id="issueMessage" class="success-message"></p>
+        </div>
+      </div>
+      
+      <div class="background-element element-1"></div>
+      <div class="background-element element-2"></div>
+    </main>
+
+    <footer>
+      <p>© 2025 ShopMahal</p>
+    </footer>
+  </div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    console.log('Script loaded');
+
+    // Initialize EmailJS with your User ID
+    (function() {
+      try {
+        emailjs.init('9A3AidoRM6UNyowLo');
+        console.log('EmailJS initialized');
+      } catch (e) {
+        console.error('EmailJS initialization failed:', e);
+      }
+    })();
+
+    // Toggle help options
+    function toggleHelpOptions() {
+      const helpOptions = document.getElementById('helpOptions');
+      const issueMessage = document.getElementById('issueMessage');
+      helpOptions.style.display = helpOptions.style.display === 'block' ? 'none' : 'block';
+      if (helpOptions.style.display === 'none') {
+        issueMessage.style.display = 'none'; // Hide success/error message when closing
+      }
+    }
+
+    // Submit contact form
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      console.log('Contact form found');
+      contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        console.log('Contact form submitted');
+
+        const formData = new FormData(contactForm);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+        const time = new Date().toLocaleString("en-US", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true
+        }) + " IST";
+        console.log('Contact form data:', { name, email, message, time });
+
+        const formMessage = document.getElementById('form-message');
+        if (!name || !email || !message) {
+          formMessage.textContent = 'Please fill in all fields.';
+          formMessage.className = 'error-message';
+          formMessage.style.display = 'block';
+          return;
+        }
+
+        // Show immediate success message
+        formMessage.textContent = 'Submitting...';
+        formMessage.className = 'success-message';
+        formMessage.style.display = 'block';
+
+        emailjs.send('service_mky2fui', 'template_853n4kg', {
+          name: name,
+          email: email,
+          message: message,
+          time: time
+        })
+        .then((response) => {
+          console.log('Contact email sent successfully:', response.status, response.text);
+          formMessage.textContent = 'Contact form submitted successfully! Check your email for confirmation.';
+          contactForm.reset();
+        })
+        .catch((error) => {
+          console.error('Error sending contact email:', error);
+          formMessage.textContent = 'Failed to send contact form. Please try again or contact support.';
+          formMessage.className = 'error-message';
+        });
+      });
+    } else {
+      console.error('Contact form not found');
+    }
+
+    // Submit issue
+    function submitIssue() {
+      const issueText = document.getElementById('issueText').value;
+      const issueEmail = document.getElementById('issueEmail').value;
+      const issueMessage = document.getElementById('issueMessage');
+      if (issueText.trim() && issueEmail.trim()) {
+        console.log('Issue submitted:', { issueEmail, issueText });
+
+        const time = new Date().toLocaleString("en-US", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true
+        }) + " IST";
+        console.log('Issue form data:', { issueEmail, issueText, time });
+
+        // Show immediate success message
+        issueMessage.textContent = 'Submitting...';
+        issueMessage.className = 'success-message';
+        issueMessage.style.display = 'block';
+
+        emailjs.send('service_mky2fui', 'template_853n4kg', {
+          name: 'for reaching us',
+          email: issueEmail,
+          message: issueText,
+          time: time
+        })
+        .then((response) => {
+          console.log('Issue email sent successfully:', response.status, response.text);
+          issueMessage.textContent = 'Issue submitted successfully! Check your email for confirmation.';
+          document.getElementById('issueText').value = '';
+          document.getElementById('issueEmail').value = '';
+        })
+        .catch((error) => {
+          console.error('Error sending issue email:', error);
+          issueMessage.textContent = 'Failed to submit issue. Please try again or contact support.';
+          issueMessage.className = 'error-message';
+        });
+      } else {
+        issueMessage.textContent = 'Please fill in both email and issue description.';
+        issueMessage.className = 'error-message';
+        issueMessage.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
